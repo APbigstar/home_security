@@ -33,7 +33,7 @@ function App() {
         setSubmitData({...submitData, city: data.results[0]?.formatted_address.split(",")[0], state: (data.results[0]?.formatted_address.split(",")[1]).split(' ')[1]})
       }
     });
-  }, [submitData])
+  }, [submitData.zip_code])
 
   return (
     <Container maxWidth="sm" sx={{marginTop: '100px'}}>

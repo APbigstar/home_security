@@ -5,7 +5,8 @@ const Address = ({submitData, setSubmitData, updateItem}) => {
     const { ref: materialRef } = usePlacesWidget({
         apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
         onPlaceSelected: (place) => {
-          setSubmitData({...submitData, address: place.formatted_address, country: place?.address_components[2]?.long_name})
+            console.log(place)
+          setSubmitData({...submitData, address: place.formatted_address, country: place?.address_components[place?.address_components.length - 1]?.long_name})
         },
         inputAutocompleteValue: "country"
     });
