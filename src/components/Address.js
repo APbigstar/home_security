@@ -8,6 +8,10 @@ const Address = ({submitData, setSubmitData, updateItem}) => {
             console.log(place)
           setSubmitData({...submitData, address: place.formatted_address, country: place?.address_components[place?.address_components.length - 1]?.long_name})
         },
+        options: {
+          types: ["(regions)"],
+          componentRestrictions: { country: "us" },
+        },
         inputAutocompleteValue: "country"
     });
     return (

@@ -6,7 +6,7 @@ import Img3 from './../assets/howitworks3.png';
 
 const HowItWorks = () => {
     return (
-        <Container sx={{marginTop:'100px', padding: '0 !important'}}>
+        <Container sx={{margin:'100px 0', padding: '0 !important'}}>
             <h1>How it Works</h1>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                 <img src={Img1} />

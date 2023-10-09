@@ -1,16 +1,17 @@
 import React from 'react';
 import { Box, Button } from '@mui/material';
 
-const Buttons = ({submitData, formStep, setFormStep}) => {
+const Buttons = ({setErrorMsg, submitData, formStep, setFormStep}) => {
     const handleNextBtn = async () => {
-        if(submitData.property_type === '' && formStep === 1) return;
-        if((submitData.zip_code === '' || submitData.city === '' || submitData.state === '') && formStep === 2) return;
-        if(submitData.installation_preference === '' && formStep === 3) return;
-        if(!(submitData.securityCamera || submitData.securitySensors || submitData.securityGlass || submitData.securityDoorbell) && formStep === 4) return;
-        if(submitData.system_type === '' && formStep === 5) return;
-        if(submitData.entrances === '' && formStep === 6) return;
-        if((submitData.address === '' || submitData.unit === '' || submitData.country === '') && formStep === 7) return;
-        if((submitData.first_name === '' || submitData.last_name === '' || submitData.email_address === '' || submitData.phone === '') && formStep === 8) return;
+        setErrorMsg('');
+        if(submitData.property_type === '' && formStep === 1) {setErrorMsg('Please select one of property!'); return;}
+        if((submitData.zip_code === '' || submitData.city === '' || submitData.state === '') && formStep === 2) {setErrorMsg('Please fill all fields!'); return;}
+        if(submitData.installation_preference === '' && formStep === 3) {setErrorMsg('Please select one of property!'); return;}
+        if(!(submitData.securityCamera || submitData.securitySensors || submitData.securityGlass || submitData.securityDoorbell) && formStep === 4) {setErrorMsg('Please select at least one item!'); return;}
+        if(submitData.system_type === '' && formStep === 5) {setErrorMsg('Please select one system type!'); return;}
+        if(submitData.entrances === '' && formStep === 6) {setErrorMsg('Please select entrance count!'); return;}
+        if((submitData.address === '' || submitData.unit === '' || submitData.country === '') && formStep === 7) {setErrorMsg('Please fill all fields!'); return;}
+        if((submitData.first_name === '' || submitData.last_name === '' || submitData.email_address === '' || submitData.phone === '') && formStep === 8) {setErrorMsg('Please fill all fields!'); return;}
         if(formStep === 8) {
             let wrong_email_flag = false;
             await fetch(`https://emailvalidation.abstractapi.com/v1/?api_key=${process.env.REACT_APP_EMAIL_ADDRESS_API}&email=${submitData.email_address}`)
@@ -18,7 +19,7 @@ const Buttons = ({submitData, formStep, setFormStep}) => {
             .then((data) => {
                 if(!data?.is_smtp_valid?.value) {
                     wrong_email_flag = true;
-                    alert('Wrong email address!')
+                    setErrorMsg('Wrong email address!');
                 }
             });
             if(wrong_email_flag) return;
@@ -27,7 +28,7 @@ const Buttons = ({submitData, formStep, setFormStep}) => {
             .then((data) => {
                 if(data.valid)
                     setFormStep(formStep + 1);
-                else alert('Wrong phone number!')
+                else setErrorMsg('Wrong phone number!')
             });
             return;
         }
